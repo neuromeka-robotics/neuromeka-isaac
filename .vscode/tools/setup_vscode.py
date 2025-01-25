@@ -114,13 +114,11 @@ def overwrite_python_analysis_extra_paths(isaaclab_settings: str) -> str:
     # isaaclab_extensions = os.listdir(os.path.join(PROJECT_DIR, "exts"))
     # path_names.extend(['"${workspaceFolder}/exts/' + ext + '"' for ext in isaaclab_extensions])
 
-    # TODO: Modified by Joonho Lee
-    isaaclab_extensions = os.listdir(PROJECT_DIR)
-    path_names.extend(['"${workspaceFolder}/exts/' + ext + '"' for ext in isaaclab_extensions])
-    # neuromeka_extension = os.path.join(PROJECT_DIR, "isaac_neuromeka")
-    # path_names.extend(['"${workspaceFolder}/exts/"' + neuromeka_extension])
 
-
+    # isaaclab_extensions = os.listdir(PROJECT_DIR)
+    isaaclab_extension = os.path.join(PROJECT_DIR, "isaac_neuromeka")
+    path_names.extend(['"${workspaceFolder}/' + isaaclab_extension + '"'])
+    
     # combine them into a single string
     path_names = ",\n\t\t".expandtabs(4).join(path_names)
     # deal with the path separator being different on Windows and Unix
@@ -206,22 +204,21 @@ def main():
     with open(isaaclab_vscode_filename, "w") as f:
         f.write(isaaclab_settings)
 
-    # TODO: configure the launch.json file
     # copy the launch.json file if it doesn't exist
-    isaaclab_vscode_launch_filename = os.path.join(PROJECT_DIR, ".vscode", "launch.json")
-    isaaclab_vscode_template_launch_filename = os.path.join(PROJECT_DIR, ".vscode", "tools", "launch.template.json")
-    if not os.path.exists(isaaclab_vscode_launch_filename):
-        # read template launch settings
-        with open(isaaclab_vscode_template_launch_filename) as f:
-            isaaclab_template_launch_settings = f.read()
-        # add header
-        header_message = header_message.replace(
-            isaaclab_vscode_template_filename, isaaclab_vscode_template_launch_filename
-        )
-        isaaclab_launch_settings = header_message + isaaclab_template_launch_settings
-        # write the Isaac Lab launch settings file
-        with open(isaaclab_vscode_launch_filename, "w") as f:
-            f.write(isaaclab_launch_settings)
+    # isaaclab_vscode_launch_filename = os.path.join(PROJECT_DIR, ".vscode", "launch.json")
+    # isaaclab_vscode_template_launch_filename = os.path.join(PROJECT_DIR, ".vscode", "tools", "launch.template.json")
+    # if not os.path.exists(isaaclab_vscode_launch_filename):
+    #     # read template launch settings
+    #     with open(isaaclab_vscode_template_launch_filename) as f:
+    #         isaaclab_template_launch_settings = f.read()
+    #     # add header
+    #     header_message = header_message.replace(
+    #         isaaclab_vscode_template_filename, isaaclab_vscode_template_launch_filename
+    #     )
+    #     isaaclab_launch_settings = header_message + isaaclab_template_launch_settings
+    #     # write the Isaac Lab launch settings file
+    #     with open(isaaclab_vscode_launch_filename, "w") as f:
+    #         f.write(isaaclab_launch_settings)
 
 
 if __name__ == "__main__":

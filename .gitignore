@@ -3,7 +3,7 @@
 logs/
 robot_logs/
 _orbit*
-_issaclab*
+IsaacLab/   
 .idea/
 wandb/
 
@@ -11,4 +11,3 @@ wandb/
 object_dataset/
 *.h5
 
-#
