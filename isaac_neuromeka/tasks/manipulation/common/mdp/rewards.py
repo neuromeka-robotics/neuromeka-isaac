@@ -15,12 +15,12 @@ from omni.isaac.lab.sensors import FrameTransformer
 from omni.isaac.lab.utils.math import combine_frame_transforms
 
 if TYPE_CHECKING:
-    from omni.isaac.lab.envs import RLTaskEnv
+    from omni.isaac.lab.envs import ManagerBasedRLEnv
 
 from isaac_neuromeka.assets.articulation import FiniteArticulation
 
 def object_is_lifted(
-    env: RLTaskEnv, minimal_height: float, object_cfg: SceneEntityCfg = SceneEntityCfg("object")
+    env: ManagerBasedRLEnv, minimal_height: float, object_cfg: SceneEntityCfg = SceneEntityCfg("object")
 ) -> torch.Tensor:
     """Reward the agent for lifting the object above the minimal height."""
     object: RigidObject = env.scene[object_cfg.name]
@@ -40,7 +40,7 @@ def object_is_lifted(
     # #####
 
 def action_w_object_condition(
-    env: RLTaskEnv,
+    env: ManagerBasedRLEnv,
     threshold: float,
     penalty_scale: float
 ) -> torch.Tensor:
@@ -60,7 +60,7 @@ def action_w_object_condition(
     return torch.where(distance < threshold, action_l2 * penalty_scale, action_l2)
 
 def object_z_distance(
-        env: RLTaskEnv,
+        env: ManagerBasedRLEnv,
         std: float
 ) -> torch.Tensor:
     # extract the used quantities (to enable type-hinting)
@@ -77,14 +77,14 @@ def object_z_distance(
     return torch.where(env.episode_length_buf > 30, 1 - torch.tanh(distance / std), 0.)  # 1s for 30Hz controller
 
 
-def object_height(env: RLTaskEnv, object_cfg: SceneEntityCfg = SceneEntityCfg("object")) -> torch.Tensor:
+def object_height(env: ManagerBasedRLEnv, object_cfg: SceneEntityCfg = SceneEntityCfg("object")) -> torch.Tensor:
     """Reward the agent for lifting the object above the minimal height."""
     object: RigidObject = env.scene[object_cfg.name]
     return torch.clamp(object.data.root_pos_w[:, 2], min=0.0, max=0.25)
 
 
 def object_height_lifted(
-    env: RLTaskEnv, minimal_height: float, object_cfg: SceneEntityCfg = SceneEntityCfg("object")
+    env: ManagerBasedRLEnv, minimal_height: float, object_cfg: SceneEntityCfg = SceneEntityCfg("object")
 ) -> torch.Tensor:
     """Reward the agent for lifting the object above the minimal height."""
     object: RigidObject = env.scene[object_cfg.name]
@@ -94,7 +94,7 @@ def object_height_lifted(
 
 
 def object_ee_distance(
-    env: RLTaskEnv,
+    env: ManagerBasedRLEnv,
     std: float,
     object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
     ee_frame_cfg: SceneEntityCfg = SceneEntityCfg("ee_frame"),
@@ -113,7 +113,7 @@ def object_ee_distance(
 
 
 def object_goal_distance(
-    env: RLTaskEnv,
+    env: ManagerBasedRLEnv,
     std: float,
     command_name: str,
     robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
@@ -138,7 +138,7 @@ def object_goal_distance(
 
 
 def object_goal_distance_w_ee(
-    env: RLTaskEnv,
+    env: ManagerBasedRLEnv,
     std: float,
     minimal_height: float,
     command_name: str,
@@ -163,7 +163,7 @@ def object_goal_distance_w_ee(
 
 
 def object_goal_distance_wo_clip(
-    env: RLTaskEnv,
+    env: ManagerBasedRLEnv,
     std: float,
     command_name: str,
     robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
@@ -184,7 +184,7 @@ def object_goal_distance_wo_clip(
 
 
 def joint_vel_l2_w_object(
-    env: RLTaskEnv,
+    env: ManagerBasedRLEnv,
     robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
     object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
     ee_frame_cfg: SceneEntityCfg = SceneEntityCfg("ee_frame"),
@@ -208,7 +208,7 @@ def joint_vel_l2_w_object(
 
 
 def finite_joint_vel_l2_w_object(
-    env: RLTaskEnv,
+    env: ManagerBasedRLEnv,
     robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
     object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
     ee_frame_cfg: SceneEntityCfg = SceneEntityCfg("ee_frame"),

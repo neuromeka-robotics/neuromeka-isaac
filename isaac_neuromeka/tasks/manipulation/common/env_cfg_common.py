@@ -11,7 +11,7 @@ from dataclasses import MISSING
 import numpy as np
 import omni.isaac.lab.sim as sim_utils
 from omni.isaac.lab.assets import ArticulationCfg, AssetBaseCfg
-from omni.isaac.lab.envs import RLTaskEnvCfg
+from omni.isaac.lab.envs import ManagerBasedRLEnvCfg
 from omni.isaac.lab.managers import ActionTermCfg as ActionTerm
 from omni.isaac.lab.managers import CurriculumTermCfg as CurrTerm
 from omni.isaac.lab.managers import EventTermCfg as EventTerm
@@ -42,17 +42,20 @@ class CommandsCfg:
     """Command terms for the MDP."""
 
     class ConFig:
-        default_ee_pose = np.array([0.3563, -0.1829,  0.5132])
-
+        default_ee_pose = np.array([0.3563, -0.1829,  0.5132], float)
+    
     ee_pose = mdp.UniformPoseCommandCfg(
         asset_name="robot",
         body_name=MISSING,
         resampling_time_range=(6.0, 10.0),
         debug_vis=True,
         ranges=mdp.UniformPoseCommandCfg.Ranges(
-            pos_x=(ConFig.default_ee_pose[0], ConFig.default_ee_pose[0] + 0.3),
-            pos_y=(ConFig.default_ee_pose[1] - 0.2, ConFig.default_ee_pose[1] + 0.2),
-            pos_z=(ConFig.default_ee_pose[2] - 0.3, ConFig.default_ee_pose[2]),
+            # pos_x=(ConFig.default_ee_pose[0], ConFig.default_ee_pose[0] + 0.3),
+            # pos_y=(ConFig.default_ee_pose[1] - 0.2, ConFig.default_ee_pose[1] + 0.2),
+            # pos_z=(ConFig.default_ee_pose[2] - 0.3, ConFig.default_ee_pose[2]),
+            pos_x=(0.0, 0.0),
+            pos_y=(0.0, 0.0),
+            pos_z=(0.0, 0.0),
             roll=(0.0, 0.0),
             pitch=MISSING,  # depends on end-effector axis
             yaw=(-3.14, 3.14),
@@ -264,15 +267,15 @@ class CurriculumCfg:
 # Environment configuration
 ##
 
-from omni.isaac.lab.envs.base_env_cfg import BaseEnvCfg
-from omni.isaac.lab.envs.ui import RLTaskEnvWindow
+from omni.isaac.lab.envs import ManagerBasedEnvCfg
+from omni.isaac.lab.envs.ui import ManagerBasedRLEnvWindow
 
 @configclass
-class NrmkRLCfg(BaseEnvCfg):
+class NrmkRLCfg(ManagerBasedEnvCfg):
     """Configuration for a reinforcement learning environment."""
 
     # ui settings
-    ui_window_class_type: type | None = RLTaskEnvWindow
+    ui_window_class_type: type | None = ManagerBasedRLEnvWindow
 
     # general settings
     is_finite_horizon: bool = False

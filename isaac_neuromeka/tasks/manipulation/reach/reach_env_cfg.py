@@ -56,10 +56,10 @@ class ReachSceneCfg(InteractiveSceneCfg):
     robot: ArticulationCfg = None
     
     # target object
-    obstacle: RigidObjectCfg = None
+    obstacle = None
 
     # contact sensor
-    # contact_sensors: ContactSensorCfg = MISSING
+    contact_sensors = None
     
     # lights
     light = AssetBaseCfg(

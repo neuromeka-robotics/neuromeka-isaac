@@ -8,44 +8,44 @@ from omni.isaac.lab.managers import SceneEntityCfg
 
 
 if TYPE_CHECKING:
-    from omni.isaac.lab.envs import RLTaskEnv
-    from isaac_neuromeka.env.rl_task_custom_env import CustomRLTaskEnv
+    from omni.isaac.lab.envs import ManagerBasedRLEnv
+    from isaac_neuromeka.env.rl_task_custom_env import CustomManagerBasedRLEnv
 
 from isaac_neuromeka.assets.articulation import FiniteArticulation
 
 
 def finite_joint_vel(
-        env: RLTaskEnv,
+        env: ManagerBasedRLEnv,
         asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
 ) -> torch.Tensor:
     asset: FiniteArticulation = env.scene[asset_cfg.name]
     return asset._finite_joint_vel[:, asset_cfg.joint_ids]
 
 def joint_pos_history(
-        env: RLTaskEnv,
+        env: ManagerBasedRLEnv,
         asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")
 ) -> torch.Tensor:
     asset: FiniteArticulation = env.scene[asset_cfg.name]
     return torch.cat((asset._prevprev_joint_pos[:, asset_cfg.joint_ids], asset._prev_joint_pos[:, asset_cfg.joint_ids]), dim=-1)
 
 def joint_vel_history(
-        env: RLTaskEnv,
+        env: ManagerBasedRLEnv,
         asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")
 ) -> torch.Tensor:
     asset: FiniteArticulation = env.scene[asset_cfg.name]
     return torch.cat((asset._prevprev_finite_joint_vel[:, asset_cfg.joint_ids], asset._prev_finite_joint_vel[:, asset_cfg.joint_ids]), dim=-1)
 
-def action_history(env: RLTaskEnv) -> torch.Tensor:
+def action_history(env: ManagerBasedRLEnv) -> torch.Tensor:
     return torch.cat((env.action_manager.prev_action, env.action_manager.action), dim=-1)
 
-def position_error(env: RLTaskEnv) -> torch.Tensor:
+def position_error(env: ManagerBasedRLEnv) -> torch.Tensor:
     return env.command_manager.get_term("ee_pose").metrics["position_error"].unsqueeze(-1)
 
-def orientation_error(env: RLTaskEnv) -> torch.Tensor:
+def orientation_error(env: ManagerBasedRLEnv) -> torch.Tensor:
     return env.command_manager.get_term("ee_pose").metrics["orientation_error"].unsqueeze(-1)
 
 def op_state(
-        env: RLTaskEnv,
+        env: ManagerBasedRLEnv,
         asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")
 ) -> torch.Tensor:
     asset: FiniteArticulation = env.scene[asset_cfg.name]
@@ -55,7 +55,7 @@ def op_state(
 from omni.isaac.lab.utils.math import subtract_frame_transforms, matrix_from_quat
 
 def body_pose_b(
-        env: RLTaskEnv,
+        env: ManagerBasedRLEnv,
         body_name: str,
         asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")
 ) -> torch.Tensor:
@@ -72,7 +72,7 @@ def body_pose_b(
     return body_pose_b
 
 def body_vel_b(
-        env: RLTaskEnv,
+        env: ManagerBasedRLEnv,
         body_name: str,
         asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")
 ) -> torch.tensor:
@@ -90,7 +90,7 @@ def body_vel_b(
 Privileged information.
 """
 
-def joint_friction(env: CustomRLTaskEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+def joint_friction(env: CustomManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
     """The joint friction of the asset.
 
     Note: Only the joints configured in :attr:`asset_cfg.joint_ids` will have their friction returned.
@@ -99,7 +99,7 @@ def joint_friction(env: CustomRLTaskEnv, asset_cfg: SceneEntityCfg = SceneEntity
     asset: FiniteArticulation = env.scene[asset_cfg.name]
     return asset.data.joint_friction[:, asset_cfg.joint_ids]
 
-def joint_damping(env: CustomRLTaskEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+def joint_damping(env: CustomManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
     """The joint damping of the asset.
 
     Note: Only the joints configured in :attr:`asset_cfg.joint_ids` will have their damping returned.
@@ -108,7 +108,7 @@ def joint_damping(env: CustomRLTaskEnv, asset_cfg: SceneEntityCfg = SceneEntityC
     asset: FiniteArticulation = env.scene[asset_cfg.name]
     return asset.data.joint_damping[:, asset_cfg.joint_ids]
 
-def action_delay_steps(env: CustomRLTaskEnv) -> torch.Tensor:
+def action_delay_steps(env: CustomManagerBasedRLEnv) -> torch.Tensor:
     
     if hasattr(env, "delay_steps"):
         return env.delay_steps.reshape(-1, 1)

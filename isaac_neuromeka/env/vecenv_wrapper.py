@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: BSD-3-Clause
 
-"""Wrapper to configure an :class:`RLTaskEnv` instance to NRMK-RL vectorized environment.
+"""Wrapper to configure an :class:`ManagerBasedRLEnv` instance to NRMK-RL vectorized environment.
 
 The following example shows how to wrap an environment for NRMK-RL:
 
@@ -19,13 +19,13 @@ import pdb
 import gymnasium as gym
 import torch
 from nrmk_rl.env import VecEnv
-from omni.isaac.lab.envs import RLTaskEnv
+from omni.isaac.lab.envs import ManagerBasedRLEnv
 
 
 class NrmkRlVecEnvWrapper(VecEnv):
     """Wraps around Orbit environment for NRMK-RL library"""
 
-    def __init__(self, env: RLTaskEnv):
+    def __init__(self, env: ManagerBasedRLEnv):
         """Initializes the wrapper.
 
         Note:
@@ -35,11 +35,11 @@ class NrmkRlVecEnvWrapper(VecEnv):
             env: The environment to wrap around.
 
         Raises:
-            ValueError: When the environment is not an instance of :class:`RLTaskEnv`.
+            ValueError: When the environment is not an instance of :class:`ManagerBasedRLEnv`.
         """
         # check that input is valid
-        if not isinstance(env.unwrapped, RLTaskEnv):
-            raise ValueError(f"The environment must be inherited from RLTaskEnv. Environment type: {type(env)}")
+        if not isinstance(env.unwrapped, ManagerBasedRLEnv):
+            raise ValueError(f"The environment must be inherited from ManagerBasedRLEnv. Environment type: {type(env)}")
         # initialize the wrapper
         self.env = env
         # store information required by wrapper
@@ -94,7 +94,7 @@ class NrmkRlVecEnvWrapper(VecEnv):
         return cls.__name__
 
     @property
-    def unwrapped(self) -> RLTaskEnv:
+    def unwrapped(self) -> ManagerBasedRLEnv:
         """Returns the base environment of the wrapper.
 
         This will be the bare :class:`gymnasium.Env` environment, underneath all layers of wrappers.

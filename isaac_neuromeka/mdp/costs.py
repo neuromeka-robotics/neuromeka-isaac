@@ -13,11 +13,11 @@ from omni.isaac.lab.utils.math import (
 )
 
 if TYPE_CHECKING:
-    from omni.isaac.lab.envs import RLTaskEnv
+    from omni.isaac.lab.envs import ManagerBasedRLEnv
 from isaac_neuromeka.assets.articulation import FiniteArticulation
 
 
-def joint_vel_cost_01(env: RLTaskEnv, 
+def joint_vel_cost_01(env: ManagerBasedRLEnv, 
                     asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
                     soft_limit_ratio: float = 0.99) -> torch.Tensor:
     """
@@ -37,7 +37,7 @@ def joint_vel_cost_01(env: RLTaskEnv,
     return torch.any(torch.gt(violation, torch.zeros_like(violation)), dim=1).int()
 
 
-def joint_vel_cost_relu(env: RLTaskEnv, 
+def joint_vel_cost_relu(env: ManagerBasedRLEnv, 
                         asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
                         soft_limit_ratio: float = 0.99) -> torch.Tensor:
     """
@@ -57,7 +57,7 @@ def joint_vel_cost_relu(env: RLTaskEnv,
 
 
 # End-effector speed limit (1m/s). TODO: variable speed limit
-def ee_speed_cost_relu(env: RLTaskEnv, 
+def ee_speed_cost_relu(env: ManagerBasedRLEnv, 
                         asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
                         speed_limit: float = 1.0) -> torch.Tensor:
     

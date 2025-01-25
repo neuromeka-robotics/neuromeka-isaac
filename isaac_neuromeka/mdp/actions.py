@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from collections.abc import Sequence
 from omni.isaac.lab.envs.mdp.actions import JointAction, actions_cfg
-from omni.isaac.lab.envs import BaseEnv
+from omni.isaac.lab.envs import ManagerBasedEnv
 
 class CustomJointPositionAction(JointAction):
     """Joint action term that applies the processed actions to the articulation's joints as position commands."""
@@ -10,7 +10,7 @@ class CustomJointPositionAction(JointAction):
     cfg: actions_cfg.JointPositionActionCfg
     """The configuration of the action term."""
 
-    def __init__(self, cfg: actions_cfg.JointPositionActionCfg, env: BaseEnv):
+    def __init__(self, cfg: actions_cfg.JointPositionActionCfg, env: ManagerBasedEnv):
         # initialize the action term
         super().__init__(cfg, env)
         # use default joint positions as offset

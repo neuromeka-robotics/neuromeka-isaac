@@ -9,8 +9,8 @@ from collections.abc import Callable
 
 import numpy as np
 import torch
-# from omni.isaac.lab.envs import RLTaskEnv, RLTaskEnvCfg
-from omni.isaac.lab.envs import ManagerBasedRLEnv, RLTaskEnvCfg
+# from omni.isaac.lab.envs import ManagerBasedRLEnv, ManagerBasedRLEnvCfg
+from omni.isaac.lab.envs import ManagerBasedRLEnv, ManagerBasedRLEnvCfg
 from omni.isaac.lab.managers import (
     EventManager,
     ObservationManager,
@@ -26,8 +26,8 @@ from dataclasses import MISSING
 
 from isaac_neuromeka.env.managers import*
 
-class CustomRLTaskEnv(RLTaskEnv):
-    def __init__(self, cfg: RLTaskEnvCfg, render_mode: str | None = None, **kwargs):
+class CustomManagerBasedRLEnv(ManagerBasedRLEnv):
+    def __init__(self, cfg: ManagerBasedRLEnvCfg, render_mode: str | None = None, **kwargs):
         # -- container for extra information
         self.extra_data = dict()
         super().__init__(cfg, render_mode, **kwargs)

@@ -1,7 +1,7 @@
 from omni.isaac.lab.managers import ActionManager
-from omni.isaac.lab.envs import BaseEnv
+from omni.isaac.lab.envs import ManagerBasedEnv
 from omni.isaac.lab.assets import Articulation
-from omni.isaac.lab.envs import RLTaskEnv, RLTaskEnvCfg
+from omni.isaac.lab.envs import ManagerBasedRLEnv, ManagerBasedRLEnvCfg
 from prettytable import PrettyTable
 
 from collections.abc import Sequence
@@ -60,7 +60,7 @@ class CustomObservationManager(ObservationManager):
 
 
 class CustomActionManager(ActionManager):
-    def __init__(self, cfg: object, env: BaseEnv):
+    def __init__(self, cfg: object, env: ManagerBasedEnv):
         super().__init__(cfg, env)
         self._prevprev_action = torch.zeros_like(self._action)
 
@@ -117,7 +117,7 @@ class CustomActionManager(ActionManager):
 
 
 class CustomRewardManager(RewardManager):
-    def __init__(self, cfg: object, env: RLTaskEnv):
+    def __init__(self, cfg: object, env: ManagerBasedRLEnv):
         super().__init__(cfg, env)
         self._episode_stats = dict()
         for term_name in self._term_names:
@@ -177,7 +177,7 @@ class CustomRewardManager(RewardManager):
 
 
 class CostManager(RewardManager):
-    def __init__(self, cfg: object, env: RLTaskEnv):
+    def __init__(self, cfg: object, env: ManagerBasedRLEnv):
         super().__init__(cfg, env)
         self._episode_stats = dict()
         self.num_cost_terms = len(self._term_names)
@@ -257,7 +257,7 @@ class CostManager(RewardManager):
 
 
 class HistoryManager(ManagerTermBase):
-    def __init__(self, cfg: ManagerTermBaseCfg, env: BaseEnv):
+    def __init__(self, cfg: ManagerTermBaseCfg, env: ManagerBasedEnv):
         self.cfg = cfg
         self._env = env
         self.history_buffer = None  # (N, T, D)
@@ -266,7 +266,7 @@ class HistoryManager(ManagerTermBase):
         if self.history_buffer is not None:
             self.history_buffer[env_ids] = 0.
 
-    def __call__(self, env: RLTaskEnv, name: str, length: int):
+    def __call__(self, env: ManagerBasedRLEnv, name: str, length: int):
         if hasattr(env, "observation_manager"):  # at init
             current_data = env.observation_manager.group_obs[name]
         else:

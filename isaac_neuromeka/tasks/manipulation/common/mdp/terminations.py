@@ -19,12 +19,12 @@ from omni.isaac.lab.managers import SceneEntityCfg
 from omni.isaac.lab.utils.math import combine_frame_transforms
 
 if TYPE_CHECKING:
-    from omni.isaac.lab.envs import RLTaskEnv
+    from omni.isaac.lab.envs import ManagerBasedRLEnv
 
 from omni.isaac.lab.sensors import FrameTransformer
 
 def object_reached_goal(
-    env: RLTaskEnv,
+    env: ManagerBasedRLEnv,
     command_name: str = "object_pose",
     threshold: float = 0.02,
     robot_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
@@ -54,7 +54,7 @@ def object_reached_goal(
 
 
 def object_far_away(
-    env: RLTaskEnv,
+    env: ManagerBasedRLEnv,
     maximum_distance: float
 ) -> torch.Tensor:
     # extract the used quantities (to enable type-hinting)

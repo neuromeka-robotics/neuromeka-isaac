@@ -1,10 +1,10 @@
 import numpy as np
 import torch
-from omni.isaac.lab.envs import RLTaskEnv
+from omni.isaac.lab.envs import ManagerBasedRLEnv
 from typing import Dict
 
 def randomize_delay(
-        env: RLTaskEnv,
+        env: ManagerBasedRLEnv,
         env_ids: torch.Tensor | None,
         delay_step_range: Dict[str, int]
 ):

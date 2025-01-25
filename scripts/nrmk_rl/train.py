@@ -56,7 +56,7 @@ import torch
 from nrmk_rl.runners import *
 
 import omni.isaac.lab_tasks  # noqa: F401
-from omni.isaac.lab.envs import RLTaskEnvCfg
+from omni.isaac.lab.envs import ManagerBasedRLEnvCfg
 from omni.isaac.lab.utils.dict import print_dict
 from omni.isaac.lab.utils.io import dump_pickle, dump_yaml
 from omni.isaac.lab_tasks.utils import get_checkpoint_path, parse_env_cfg
@@ -75,7 +75,7 @@ torch.backends.cudnn.benchmark = False
 def main():
     """Train with NRMK-RL agent."""
     # parse configuration
-    env_cfg: RLTaskEnvCfg = parse_env_cfg(
+    env_cfg: ManagerBasedRLEnvCfg = parse_env_cfg(
         args_cli.task, use_gpu=not args_cli.cpu, num_envs=args_cli.num_envs, use_fabric=not args_cli.disable_fabric
     )
     agent_cfg: NrmkRlOnPolicyRunnerCfg = cli_args.parse_nrmk_rl_cfg(args_cli.task, args_cli)

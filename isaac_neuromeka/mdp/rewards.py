@@ -18,10 +18,10 @@ from omni.isaac.lab.utils.math import (
 )
 
 if TYPE_CHECKING:
-    from omni.isaac.lab.envs import RLTaskEnv
+    from omni.isaac.lab.envs import ManagerBasedRLEnv
 from isaac_neuromeka.assets.articulation import FiniteArticulation
 
-def position_command_error(env: RLTaskEnv, command_name: str, asset_cfg: SceneEntityCfg) -> torch.Tensor:
+def position_command_error(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneEntityCfg) -> torch.Tensor:
     """Penalize tracking of the position error using L2-norm.
 
     The function computes the position error between the desired position (from the command) and the
@@ -38,7 +38,7 @@ def position_command_error(env: RLTaskEnv, command_name: str, asset_cfg: SceneEn
     return torch.norm(curr_pos_w - des_pos_w, dim=1)
 
 
-def orientation_command_error(env: RLTaskEnv, command_name: str, asset_cfg: SceneEntityCfg) -> torch.Tensor:
+def orientation_command_error(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneEntityCfg) -> torch.Tensor:
     """Penalize tracking orientation error using shortest path.
 
     The function computes the orientation error between the desired orientation (from the command) and the
@@ -55,7 +55,7 @@ def orientation_command_error(env: RLTaskEnv, command_name: str, asset_cfg: Scen
     return quat_error_magnitude(curr_quat_w, des_quat_w)
 
 
-def end_effector_position_tracking_bounded(env: RLTaskEnv,
+def end_effector_position_tracking_bounded(env: ManagerBasedRLEnv,
                                            command_name: str,
                                            asset_cfg: SceneEntityCfg,
                                            distance_max: float,
@@ -76,7 +76,7 @@ def end_effector_position_tracking_bounded(env: RLTaskEnv,
 
 
 
-def end_effector_orientation_tracking_distance_bounded(env: RLTaskEnv,
+def end_effector_orientation_tracking_distance_bounded(env: ManagerBasedRLEnv,
                                                         command_name: str,
                                                         asset_cfg: SceneEntityCfg,
                                                         distance_max: float = 0.2) -> torch.Tensor:
@@ -105,7 +105,7 @@ def end_effector_orientation_tracking_distance_bounded(env: RLTaskEnv,
     
     return total_reward
 
-def end_effector_speed(env: RLTaskEnv, asset_cfg: SceneEntityCfg) -> torch.Tensor:
+def end_effector_speed(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg) -> torch.Tensor:
     """Penalize the end-effector speed using L2-norm.
 
     The function computes the end-effector speed as the L2-norm of the end-effector's speed.
@@ -117,7 +117,7 @@ def end_effector_speed(env: RLTaskEnv, asset_cfg: SceneEntityCfg) -> torch.Tenso
     return torch.norm(speed, dim=1)
 
 
-def finite_joint_vel_l2(env: RLTaskEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+def finite_joint_vel_l2(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
     """Penalize joint velocities on the articulation using L1-kernel.
 
     NOTE: Only the joints configured in :attr:`asset_cfg.joint_ids` will have their joint velocities contribute to the L1 norm.
@@ -127,7 +127,7 @@ def finite_joint_vel_l2(env: RLTaskEnv, asset_cfg: SceneEntityCfg = SceneEntityC
     return torch.sum(torch.square(asset._finite_joint_vel[:, asset_cfg.joint_ids]), dim=1)
 
 
-def action_second_rate_l2(env: RLTaskEnv) -> torch.Tensor:
+def action_second_rate_l2(env: ManagerBasedRLEnv) -> torch.Tensor:
     return torch.sum(torch.square(
         (env.action_manager.action - env.action_manager.prev_action) -
         (env.action_manager.prev_action - env.action_manager.prevprev_action)), dim=1)

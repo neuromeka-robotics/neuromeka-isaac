@@ -6,7 +6,7 @@ import numpy as np
 from omni.isaac.lab.envs.mdp.commands import UniformPoseCommand
 from omni.isaac.lab.utils.math import quat_from_euler_xyz, quat_unique
 from omni.isaac.lab.utils import configclass
-from omni.isaac.lab.envs import BaseEnv
+from omni.isaac.lab.envs import ManagerBasedEnv
 from omni.isaac.lab.envs.mdp.commands.commands_cfg import UniformPoseCommandCfg
 
 from pynput.keyboard import Key
@@ -27,7 +27,7 @@ class KeyboardPoseCommand(UniformPoseCommand):
         pos_z: float = MISSING
         yaw: float = MISSING
 
-    def __init__(self, cfg: DefaultUniformPoseCommandCfg, env: BaseEnv):
+    def __init__(self, cfg: DefaultUniformPoseCommandCfg, env: ManagerBasedEnv):
         super().__init__(cfg, env)
 
         self.keyboard_listener = KeyboardListener(key_targets=[

@@ -12,16 +12,10 @@ category = "robotics"
 readme  = "README.md"
 
 [dependencies]
-"omni.kit.uiapp" = {}
-"omni.isaac.orbit" = {}
-"omni.isaac.orbit_assets" = {}
-"omni.isaac.orbit_tasks" = {}
-"omni.isaac.core" = {}
-"omni.isaac.gym" = {}
-"omni.replicator.isaac" = {}
-# Note: You can add additional dependencies here for your extension.
-# For example, if you want to use the omni.kit module, you can add it as a dependency:
-# "omni.kit" = {}
+"omni.isaac.lab" = {}
+"omni.isaac.lab_assets" = {}
+"omni.isaac.lab_tasks" = {}
+
 
 [[python.module]]
 name = "isaac_neuromeka"

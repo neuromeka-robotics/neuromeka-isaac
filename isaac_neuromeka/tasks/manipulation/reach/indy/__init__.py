@@ -8,7 +8,7 @@ from . import env_cfg, learning
 
 gym.register(
     id="Indy-Reach",
-    entry_point="isaac_neuromeka.env.rl_task_custom_env:CustomRLTaskEnv",
+    entry_point="isaac_neuromeka.env.rl_task_custom_env:CustomManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={
         "env_cfg_entry_point": env_cfg.Indy7ReachEnvCfg,
@@ -22,7 +22,7 @@ gym.register(
 
 # gym.register(
 #     id="Indy-Reach-Teacher",
-#     entry_point="isaac_neuromeka.env.rl_task_custom_env:CustomRLTaskEnv",
+#     entry_point="isaac_neuromeka.env.rl_task_custom_env:CustomManagerBasedRLEnv",
 #     disable_env_checker=True,
 #     kwargs={
 #         "env_cfg_entry_point": env_cfg.Indy7ReachTeacherEnvCfg,
@@ -32,7 +32,7 @@ gym.register(
 
 # gym.register(
 #     id="Indy-Reach-Student",
-#     entry_point="isaac_neuromeka.env.rl_task_custom_env:CustomRLTaskEnv",
+#     entry_point="isaac_neuromeka.env.rl_task_custom_env:CustomManagerBasedRLEnv",
 #     disable_env_checker=True,
 #     kwargs={
 #         "env_cfg_entry_point": env_cfg.Indy7ReachStudentEnvCfg,
@@ -42,7 +42,7 @@ gym.register(
 
 # gym.register(
 #     id="Indy-Reach-CMDP",
-#     entry_point="isaac_neuromeka.env.rl_task_custom_env:CustomRLTaskEnv",
+#     entry_point="isaac_neuromeka.env.rl_task_custom_env:CustomManagerBasedRLEnv",
 #     disable_env_checker=True,
 #     kwargs={
 #         "env_cfg_entry_point": env_cfg.Indy7ReachCMDPEnvCfg,
