@@ -1,6 +1,6 @@
 import os
 
-from omni.isaac.orbit.utils import configclass
+from omni.isaac.lab.utils import configclass
 
 from isaac_neuromeka.learning.runner_cfg import PPORunnerCfg, DistillationRunnerCfg, P3ORunnerCfg
 from isaac_neuromeka.learning.algorithm_cfg import NrmkPPOCfg, NrmkDistillationCfg, NrmkP3OCfg

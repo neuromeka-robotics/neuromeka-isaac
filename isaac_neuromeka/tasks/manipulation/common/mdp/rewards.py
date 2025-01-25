@@ -9,13 +9,13 @@ import pdb
 from typing import TYPE_CHECKING
 
 import torch
-from omni.isaac.orbit.assets import Articulation, RigidObject
-from omni.isaac.orbit.managers import SceneEntityCfg
-from omni.isaac.orbit.sensors import FrameTransformer
-from omni.isaac.orbit.utils.math import combine_frame_transforms
+from omni.isaac.lab.assets import Articulation, RigidObject
+from omni.isaac.lab.managers import SceneEntityCfg
+from omni.isaac.lab.sensors import FrameTransformer
+from omni.isaac.lab.utils.math import combine_frame_transforms
 
 if TYPE_CHECKING:
-    from omni.isaac.orbit.envs import RLTaskEnv
+    from omni.isaac.lab.envs import RLTaskEnv
 
 from isaac_neuromeka.assets.articulation import FiniteArticulation
 

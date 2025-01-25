@@ -3,11 +3,11 @@ from collections.abc import Sequence
 from dataclasses import MISSING
 
 import numpy as np
-from omni.isaac.orbit.envs.mdp.commands import UniformPoseCommand
-from omni.isaac.orbit.utils.math import quat_from_euler_xyz, quat_unique
-from omni.isaac.orbit.utils import configclass
-from omni.isaac.orbit.envs import BaseEnv
-from omni.isaac.orbit.envs.mdp.commands.commands_cfg import UniformPoseCommandCfg
+from omni.isaac.lab.envs.mdp.commands import UniformPoseCommand
+from omni.isaac.lab.utils.math import quat_from_euler_xyz, quat_unique
+from omni.isaac.lab.utils import configclass
+from omni.isaac.lab.envs import BaseEnv
+from omni.isaac.lab.envs.mdp.commands.commands_cfg import UniformPoseCommandCfg
 
 from pynput.keyboard import Key
 import torch

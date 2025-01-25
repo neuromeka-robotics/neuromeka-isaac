@@ -9,16 +9,16 @@ import pdb
 from typing import TYPE_CHECKING
 
 import torch
-from omni.isaac.orbit.assets import RigidObject
-from omni.isaac.orbit.managers import SceneEntityCfg
-from omni.isaac.orbit.utils.math import (
+from omni.isaac.lab.assets import RigidObject
+from omni.isaac.lab.managers import SceneEntityCfg
+from omni.isaac.lab.utils.math import (
     combine_frame_transforms,
     quat_error_magnitude,
     quat_mul,
 )
 
 if TYPE_CHECKING:
-    from omni.isaac.orbit.envs import RLTaskEnv
+    from omni.isaac.lab.envs import RLTaskEnv
 from isaac_neuromeka.assets.articulation import FiniteArticulation
 
 def position_command_error(env: RLTaskEnv, command_name: str, asset_cfg: SceneEntityCfg) -> torch.Tensor:

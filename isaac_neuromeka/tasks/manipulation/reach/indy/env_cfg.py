@@ -3,10 +3,10 @@ from __future__ import annotations
 import math
 import numpy as np
 
-from omni.isaac.orbit.utils import configclass
-# from omni.isaac.orbit.assets import RigidObjectCfg
-# import omni.isaac.orbit.sim as sim_utils
-# from omni.isaac.orbit.sensors import CameraCfg, ContactSensorCfg
+from omni.isaac.lab.utils import configclass
+# from omni.isaac.lab.assets import RigidObjectCfg
+# import omni.isaac.lab.sim as sim_utils
+# from omni.isaac.lab.sensors import CameraCfg, ContactSensorCfg
 import isaac_neuromeka.mdp as mdp
 
 ##

@@ -1,12 +1,12 @@
-from omni.isaac.orbit.managers import ActionManager
-from omni.isaac.orbit.envs import BaseEnv
-from omni.isaac.orbit.assets import Articulation
-from omni.isaac.orbit.envs import RLTaskEnv, RLTaskEnvCfg
+from omni.isaac.lab.managers import ActionManager
+from omni.isaac.lab.envs import BaseEnv
+from omni.isaac.lab.assets import Articulation
+from omni.isaac.lab.envs import RLTaskEnv, RLTaskEnvCfg
 from prettytable import PrettyTable
 
 from collections.abc import Sequence
 
-from omni.isaac.orbit.managers import (
+from omni.isaac.lab.managers import (
     EventManager,
     ObservationManager,
     CommandManager,

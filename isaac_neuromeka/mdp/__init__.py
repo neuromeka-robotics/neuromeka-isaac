@@ -5,7 +5,7 @@
 
 """This sub-module contains the functions that are specific to the locomotion environments."""
 
-from omni.isaac.orbit.envs.mdp import *  # noqa: F401, F403
+from omni.isaac.lab.envs.mdp import *  # noqa: F401, F403
 
 from .observations import *
 from .rewards import *  # noqa: F401, F403

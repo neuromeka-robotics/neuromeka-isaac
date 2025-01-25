@@ -9,7 +9,7 @@ The following example shows how to wrap an environment for NRMK-RL:
 
 .. code-block:: python
 
-    from omni.isaac.orbit_tasks.utils.wrappers.nrmk_rl import NrmkRlVecEnvWrapper
+    from omni.isaac.lab_tasks.utils.wrappers.nrmk_rl import NrmkRlVecEnvWrapper
 
     env = NrmkRlVecEnvWrapper(env)
 
@@ -19,7 +19,7 @@ import pdb
 import gymnasium as gym
 import torch
 from nrmk_rl.env import VecEnv
-from omni.isaac.orbit.envs import RLTaskEnv
+from omni.isaac.lab.envs import RLTaskEnv
 
 
 class NrmkRlVecEnvWrapper(VecEnv):

@@ -4,11 +4,11 @@ import pdb
 from typing import TYPE_CHECKING
 
 import torch
-from omni.isaac.orbit.managers import SceneEntityCfg
+from omni.isaac.lab.managers import SceneEntityCfg
 
 
 if TYPE_CHECKING:
-    from omni.isaac.orbit.envs import RLTaskEnv
+    from omni.isaac.lab.envs import RLTaskEnv
     from isaac_neuromeka.env.rl_task_custom_env import CustomRLTaskEnv
 
 from isaac_neuromeka.assets.articulation import FiniteArticulation
@@ -52,7 +52,7 @@ def op_state(
     return asset._op_state
 
 
-from omni.isaac.orbit.utils.math import subtract_frame_transforms, matrix_from_quat
+from omni.isaac.lab.utils.math import subtract_frame_transforms, matrix_from_quat
 
 def body_pose_b(
         env: RLTaskEnv,

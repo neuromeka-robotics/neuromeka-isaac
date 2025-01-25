@@ -1,0 +1,14 @@
+**/__pycache__/
+*.egg-info
+logs/
+robot_logs/
+_orbit*
+_issaclab*
+.idea/
+wandb/
+
+# object mesh dataset
+object_dataset/
+*.h5
+
+#

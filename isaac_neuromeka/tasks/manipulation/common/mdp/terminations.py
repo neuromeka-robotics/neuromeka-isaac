@@ -5,7 +5,7 @@
 
 """Common functions that can be used to activate certain terminations for the lift task.
 
-The functions can be passed to the :class:`omni.isaac.orbit.managers.TerminationTermCfg` object to enable
+The functions can be passed to the :class:`omni.isaac.lab.managers.TerminationTermCfg` object to enable
 the termination introduced by the function.
 """
 
@@ -14,14 +14,14 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import torch
-from omni.isaac.orbit.assets import RigidObject
-from omni.isaac.orbit.managers import SceneEntityCfg
-from omni.isaac.orbit.utils.math import combine_frame_transforms
+from omni.isaac.lab.assets import RigidObject
+from omni.isaac.lab.managers import SceneEntityCfg
+from omni.isaac.lab.utils.math import combine_frame_transforms
 
 if TYPE_CHECKING:
-    from omni.isaac.orbit.envs import RLTaskEnv
+    from omni.isaac.lab.envs import RLTaskEnv
 
-from omni.isaac.orbit.sensors import FrameTransformer
+from omni.isaac.lab.sensors import FrameTransformer
 
 def object_reached_goal(
     env: RLTaskEnv,

@@ -1,8 +1,8 @@
 import numpy as np
 import torch
 from collections.abc import Sequence
-from omni.isaac.orbit.envs.mdp.actions import JointAction, actions_cfg
-from omni.isaac.orbit.envs import BaseEnv
+from omni.isaac.lab.envs.mdp.actions import JointAction, actions_cfg
+from omni.isaac.lab.envs import BaseEnv
 
 class CustomJointPositionAction(JointAction):
     """Joint action term that applies the processed actions to the articulation's joints as position commands."""

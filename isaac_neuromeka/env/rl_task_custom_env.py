@@ -9,8 +9,9 @@ from collections.abc import Callable
 
 import numpy as np
 import torch
-from omni.isaac.orbit.envs import RLTaskEnv, RLTaskEnvCfg
-from omni.isaac.orbit.managers import (
+# from omni.isaac.lab.envs import RLTaskEnv, RLTaskEnvCfg
+from omni.isaac.lab.envs import ManagerBasedRLEnv, RLTaskEnvCfg
+from omni.isaac.lab.managers import (
     EventManager,
     ObservationManager,
     CommandManager,
@@ -18,9 +19,9 @@ from omni.isaac.orbit.managers import (
     RewardManager,
     TerminationManager,
 )
-from omni.isaac.orbit.managers.manager_base import ManagerBase, ManagerTermBase
-from omni.isaac.orbit.managers.manager_term_cfg import RewardTermCfg
-from omni.isaac.orbit.utils import configclass
+from omni.isaac.lab.managers.manager_base import ManagerBase, ManagerTermBase
+from omni.isaac.lab.managers.manager_term_cfg import RewardTermCfg
+from omni.isaac.lab.utils import configclass
 from dataclasses import MISSING
 
 from isaac_neuromeka.env.managers import*

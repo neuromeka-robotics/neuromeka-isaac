@@ -48,7 +48,7 @@ def parse_nrmk_rl_cfg(task_name: str, args_cli: argparse.Namespace) -> NrmkRlOnP
     Returns:
         The parsed configuration for RSL-RL agent based on inputs.
     """
-    from omni.isaac.orbit_tasks.utils.parse_cfg import load_cfg_from_registry
+    from omni.isaac.lab_tasks.utils.parse_cfg import load_cfg_from_registry
 
     # load the default configuration
     nrmkrl_cfg: NrmkRlOnPolicyRunnerCfg = load_cfg_from_registry(task_name, "nrmk_rl_cfg_entry_point")

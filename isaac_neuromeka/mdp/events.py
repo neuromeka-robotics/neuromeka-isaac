@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from omni.isaac.orbit.envs import RLTaskEnv
+from omni.isaac.lab.envs import RLTaskEnv
 from typing import Dict
 
 def randomize_delay(
