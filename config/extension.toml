@@ -1,0 +1,27 @@
+[package]
+
+# Semantic Versioning is used: https://semver.org/
+version = "0.1.0"
+
+# Description
+title = "isaac_neuromeka"
+description="Extension for Isaac Sim usage in Neuromeka"
+repository = "https://gitlab.com/neuromeka-group/nrmkq/isaac_neuromeka.git"
+keywords = []
+category = "robotics"
+readme  = "README.md"
+
+[dependencies]
+"omni.kit.uiapp" = {}
+"omni.isaac.labomni.isaac.lab" = {}
+"omni.isaac.labomni.isaac.lab_assets" = {}
+"omni.isaac.labomni.isaac.lab_tasks" = {}
+"omni.isaac.core" = {}
+"omni.isaac.gym" = {}
+"omni.replicator.isaac" = {}
+# Note: You can add additional dependencies here for your extension.
+# For example, if you want to use the omni.kit module, you can add it as a dependency:
+# "omni.kit" = {}
+
+[[python.module]]
+name = "isaac_neuromeka"

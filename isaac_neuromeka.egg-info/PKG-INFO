@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: isaac-neuromeka
+Version: 0.1.0
+Summary: Extension for Isaac Sim usage in Neuromeka
+Home-page: https://gitlab.com/neuromeka-group/nrmkq/isaac_neuromeka.git
+Author: NRMK AI Lab
+Maintainer: Joonho Lee, Yunho Kim
+Maintainer-email: ...
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Isaac Sim :: 4.2.0
+Requires-Python: >=3.10
+License-File: LICENSE

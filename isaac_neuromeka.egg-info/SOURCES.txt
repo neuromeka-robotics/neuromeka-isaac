@@ -1,0 +1,9 @@
+LICENSE
+README.md
+setup.py
+isaac_neuromeka/__init__.py
+isaac_neuromeka.egg-info/PKG-INFO
+isaac_neuromeka.egg-info/SOURCES.txt
+isaac_neuromeka.egg-info/dependency_links.txt
+isaac_neuromeka.egg-info/not-zip-safe
+isaac_neuromeka.egg-info/top_level.txt
