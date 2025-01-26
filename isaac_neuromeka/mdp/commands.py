@@ -17,7 +17,7 @@ from isaac_neuromeka.utils.helper import KeyboardListener
 
 @configclass
 class DefaultUniformPoseCommandCfg(UniformPoseCommandCfg):
-    default_ee_pose: np.ndarray = MISSING
+    default_ee_pose: list = MISSING
 
 
 class KeyboardPoseCommand(UniformPoseCommand):

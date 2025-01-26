@@ -24,6 +24,7 @@ from omni.isaac.lab.scene import InteractiveSceneCfg
 from omni.isaac.lab.utils import configclass
 from isaac_neuromeka.utils.etc import EmptyCfg
 import isaac_neuromeka.mdp as mdp
+from omni.isaac.lab.sensors import ContactSensor, ContactSensorCfg, FrameTransformer, FrameTransformerCfg
 
 # Import common environment configuration
 from isaac_neuromeka.tasks.manipulation.common.env_cfg_common import *
@@ -59,7 +60,10 @@ class ReachSceneCfg(InteractiveSceneCfg):
     obstacle = None
 
     # contact sensor
-    contact_sensors = None
+    contact_sensors = ContactSensorCfg(
+            prim_path="{ENV_REGEX_NS}/Robot/link[5-6]",
+            update_period=0.0, debug_vis=False, track_pose=True, track_air_time=False,
+        )
     
     # lights
     light = AssetBaseCfg(
