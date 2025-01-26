@@ -67,17 +67,24 @@ class ReachSceneCfg(InteractiveSceneCfg):
         spawn=sim_utils.DomeLightCfg(color=(0.75, 0.75, 0.75), intensity=2500.0),
     )
 
+    # sky_light = AssetBaseCfg(
+    #     prim_path="/World/skyLight",
+    #     spawn=sim_utils.DomeLightCfg(
+    #         intensity=750.0,
+    #         texture_file=f"{ISAAC_NUCLEUS_DIR}/Materials/Textures/Skies/PolyHaven/kloofendal_43d_clear_puresky_4k.hdr",
+    #     ),
+    # )
 
 ##
 # Environment configuration
 ##
 
 @configclass
-class ReachEnvCfg(NrmkRLCfg): 
+class ReachEnvCfg(NrmkRLEnvCfg): 
     """Configuration for the reach end-effector pose tracking environment."""
 
     # Scene settings
-    scene: ReachSceneCfg = ReachSceneCfg(num_envs=4096, env_spacing=2.5)
+    scene: ReachSceneCfg = ReachSceneCfg(num_envs=4096, env_spacing=3.0)
     # Basic settings
     observations: ObservationsCfg = ObservationsCfg()
     actions: ActionsCfg = ActionsCfg()
@@ -103,5 +110,3 @@ class ReachEnvCfg(NrmkRLCfg):
         self.episode_length_s = 12.0
         # viewer settings
         self.viewer.eye = (2.5, 2.5, 2.5)
-        # simulation settings
-        self.sim.dt = 1.0 / 120.0

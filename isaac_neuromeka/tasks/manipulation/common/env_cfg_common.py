@@ -50,7 +50,7 @@ class CommandsCfg:
         resampling_time_range=(6.0, 10.0),
         debug_vis=True,
         ranges=mdp.UniformPoseCommandCfg.Ranges( 
-            # pos_x=(ConFig.default_ee_pose[0], ConFig.default_ee_pose[0] + 0.3),
+            # pos_x=(ConFig.default_ee_pose[0], ConFig.desfault_ee_pose[0] + 0.3),
             # pos_y=(ConFig.default_ee_pose[1] - 0.2, ConFig.default_ee_pose[1] + 0.2),
             # pos_z=(ConFig.default_ee_pose[2] - 0.3, ConFig.default_ee_pose[2]),
             pos_x=(0.3, 0.5),
@@ -272,7 +272,7 @@ from omni.isaac.lab.envs import ManagerBasedEnvCfg
 from omni.isaac.lab.envs.ui import ManagerBasedRLEnvWindow
 
 @configclass
-class NrmkRLCfg(ManagerBasedEnvCfg):
+class NrmkRLEnvCfg(ManagerBasedEnvCfg):
     """Configuration for a reinforcement learning environment."""
 
     # ui settings
@@ -293,5 +293,12 @@ class NrmkRLCfg(ManagerBasedEnvCfg):
     critic_obs_list: list | None = None
     teacher_obs_list: list | None = None
     
+    def __post_init__(self):
+        """Post initialization."""
+        # task settings
+        self.decimation = 24
+        self.sim.render_interval = 8
+        self.sim.dt = 1.0 / 120.0
+
     
 
