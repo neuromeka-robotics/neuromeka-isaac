@@ -24,17 +24,15 @@ class CustomJointPositionAction(JointAction):
             env_ids = slice(None)
         target = self.processed_actions[env_ids, :]
 
-        if self._joint_ids is not None and self._joint_ids != slice(None):
-            env_ids = env_ids.unsqueeze(-1)
+        # if self._joint_ids is not None and self._joint_ids != slice(None):
+        #         env_ids = env_ids.unsqueeze(-1)
         self._asset.set_joint_position_target(target, joint_ids=self._joint_ids, env_ids=env_ids)
 
-    def reset(self, env_ids: Sequence[int] | None = None) -> None:
-        if env_ids is None:
-            env_ids = slice(None)
-        target = self._offset[env_ids, :]
+    # def reset(self, env_ids: Sequence[int] | None = None) -> None:
+    #     if env_ids is None:
+    #         env_ids = slice(None)
+    #     target = self._offset[env_ids, :]
 
-        if self._joint_ids is not None and self._joint_ids != slice(None):
-            env_ids = env_ids.unsqueeze(-1)
-        self._asset.set_joint_position_target(target, joint_ids=self._joint_ids, env_ids=env_ids)  # TODO: fix required
-
-
+    #     if self._joint_ids is not None and self._joint_ids != slice(None):
+    #         env_ids = env_ids.unsqueeze(-1)
+    #     self._asset.set_joint_position_target(target, joint_ids=self._joint_ids, env_ids=env_ids)  # TODO: fix required

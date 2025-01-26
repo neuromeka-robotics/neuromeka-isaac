@@ -41,16 +41,16 @@ class ReachSceneCfg(InteractiveSceneCfg):
     ground = AssetBaseCfg(
         prim_path="/World/ground",
         spawn=sim_utils.GroundPlaneCfg(),
-        init_state=AssetBaseCfg.InitialStateCfg(pos=(0.0, 0.0, -1.05)),
+        init_state=AssetBaseCfg.InitialStateCfg(pos=(0.0, 0.0, 0.0)),
     )
 
-    table = AssetBaseCfg(
-        prim_path="{ENV_REGEX_NS}/Table",
-        spawn=sim_utils.UsdFileCfg(
-            usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Mounts/SeattleLabTable/table_instanceable.usd",
-        ),
-        init_state=AssetBaseCfg.InitialStateCfg(pos=(0.55, 0.0, 0.0), rot=(0.70711, 0.0, 0.0, 0.70711)),
-    )
+    # table = AssetBaseCfg(
+    #     prim_path="{ENV_REGEX_NS}/Table",
+    #     spawn=sim_utils.UsdFileCfg(
+    #         usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Mounts/SeattleLabTable/table_instanceable.usd",
+    #     ),
+    #     init_state=AssetBaseCfg.InitialStateCfg(pos=(0.55, 0.0, 0.0), rot=(0.70711, 0.0, 0.0, 0.70711)),
+    # )
 
     # robots
     robot: ArticulationCfg = None
@@ -88,7 +88,7 @@ class ReachEnvCfg(NrmkRLCfg):
     events: EventCfg | EmptyCfg = EventCfg()
     curriculum: CurriculumCfg | EmptyCfg = CurriculumCfg()
     # CMDP settings
-    costs: CostsCfg | EmptyCfg = CostsCfg()
+    costs: CostsCfg | EmptyCfg = EmptyCfg()
     
     # 
     actor_obs_list: list = ["policy"] # ["proprioception", "point_cloud", "privileged"]

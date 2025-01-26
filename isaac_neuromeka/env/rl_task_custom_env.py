@@ -18,7 +18,10 @@ from omni.isaac.lab.managers import (
     CurriculumManager,
     RewardManager,
     TerminationManager,
+    RecorderManager
 )
+
+
 from omni.isaac.lab.managers.manager_base import ManagerBase, ManagerTermBase
 from omni.isaac.lab.managers.manager_term_cfg import RewardTermCfg
 from omni.isaac.lab.utils import configclass
@@ -89,18 +92,11 @@ class CustomManagerBasedRLEnv(ManagerBasedRLEnv):
         print("[INFO] Command Manager: ", self.command_manager)
         # call the parent class to load the managers for observations and actions.
 
-        # check the configs
-        if self.cfg.randomization is not None:
-            msg = (
-                "The 'randomization' attribute is deprecated and will be removed in a future release. "
-                "Please use the 'events' attribute to configure the randomization settings."
-            )
-            warnings.warn(msg, category=DeprecationWarning)
-            carb.log_warn(msg)
-            # set the randomization as events (for backward compatibility)
-            self.cfg.events = self.cfg.randomization
 
         # prepare the managers
+        # -- recorder manager
+        self.recorder_manager = RecorderManager(self.cfg.recorders, self)
+        print("[INFO] Recorder Manager: ", self.recorder_manager)
         # -- action manager
         self.action_manager = CustomActionManager(self.cfg.actions, self)
         print("[INFO] Action Manager: ", self.action_manager)

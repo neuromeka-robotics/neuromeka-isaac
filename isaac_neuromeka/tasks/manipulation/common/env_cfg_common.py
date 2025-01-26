@@ -42,18 +42,18 @@ class CommandsCfg:
     """Command terms for the MDP."""
 
     class ConFig:
-        default_ee_pose = np.array([0.3563, -0.1829,  0.5132], float)
+        default_ee_pose = np.array([0.3563, -0.1829,  0.5132])
     
     ee_pose = mdp.UniformPoseCommandCfg(
         asset_name="robot",
-        body_name=MISSING,
+        body_name=MISSING, # TODO: multiple body names
         resampling_time_range=(6.0, 10.0),
         debug_vis=True,
-        ranges=mdp.UniformPoseCommandCfg.Ranges(
+        ranges=mdp.UniformPoseCommandCfg.Ranges( 
             # pos_x=(ConFig.default_ee_pose[0], ConFig.default_ee_pose[0] + 0.3),
             # pos_y=(ConFig.default_ee_pose[1] - 0.2, ConFig.default_ee_pose[1] + 0.2),
             # pos_z=(ConFig.default_ee_pose[2] - 0.3, ConFig.default_ee_pose[2]),
-            pos_x=(0.0, 0.0),
+            pos_x=(0.3, 0.5),
             pos_y=(0.0, 0.0),
             pos_z=(0.0, 0.0),
             roll=(0.0, 0.0),
@@ -80,7 +80,7 @@ class ObservationsCfg:
         """Observations for policy group."""
 
         # observation terms (order preserved)
-        joint_pos = ObsTerm(func=mdp.joint_pos_rel, noise=Gnoise(std=0.05))
+        joint_pos = ObsTerm(func=mdp.joint_pos, noise=Gnoise(std=0.05))
         joint_vel = ObsTerm(func=mdp.finite_joint_vel, noise=Gnoise(std=0.5))
         pose_command = ObsTerm(func=mdp.generated_commands, params={"command_name": "ee_pose"})
 
@@ -162,36 +162,37 @@ class EventCfg:
     # )
     reset_all = EventTerm(func=mdp.reset_scene_to_default, mode="reset")
 
-    randomize_joint_friction = EventTerm(
-        func=mdp.randomize_joint_parameters,
-        mode="reset",
-        params={
-            "asset_cfg": SceneEntityCfg("robot"),
-            "friction_range": (0.7, 1.3),
-            "operation": "abs",
-            "distribution": "uniform"
-        }
-    )
+    # TODO: fix them
+    # randomize_joint_friction = EventTerm(
+    #     func=mdp.randomize_joint_parameters,
+    #     mode="reset",
+    #     params={
+    #         "asset_cfg": SceneEntityCfg("robot"),
+    #         "friction_range": (0.7, 1.3),
+    #         "operation": "abs",
+    #         "distribution": "uniform"
+    #     }
+    # )
 
-    randomize_joint_stiffness_and_damping = EventTerm(
-        func=mdp.randomize_actuator_gains,
-        mode="reset",
-        params={
-            "asset_cfg": SceneEntityCfg("robot"),
-            "stiffness_range": (94.0, 106.0),  # (100 - 6, 100 + 6)
-            "damping_range": (17.0, 23.0),  # (20 - 3, 20 + 3)
-            "operation": "abs",  # if use "reset" + "add", the sampled values are added to previous iter values.
-            "distribution": "uniform",
-        },
-    )
+    # randomize_joint_stiffness_and_damping = EventTerm(
+    #     func=mdp.randomize_actuator_gains,
+    #     mode="reset",
+    #     params={
+    #         "asset_cfg": SceneEntityCfg("robot"),
+    #         "stiffness_range": (94.0, 106.0),  # (100 - 6, 100 + 6)
+    #         "damping_range": (17.0, 23.0),  # (20 - 3, 20 + 3)
+    #         "operation": "abs",  # if use "reset" + "add", the sampled values are added to previous iter values.
+    #         "distribution": "uniform",
+    #     },
+    # )
 
-    randomize_delay = EventTerm(
-        func=mdp.randomize_delay,
-        mode="reset",
-        params={
-            "delay_step_range": {"low": 20, "high": 24}
-        }
-    )
+    # randomize_delay = EventTerm(
+    #     func=mdp.randomize_delay,
+    #     mode="reset",
+    #     params={
+    #         "delay_step_range": {"low": 20, "high": 24}
+    #     }
+    # )
 
 
 @configclass

@@ -15,9 +15,9 @@ INDY7_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
         usd_path=f"{os.path.dirname(os.path.abspath(__file__))}/model/usd/indy7/indy7.usd",
         # usd_path=f"{os.path.dirname(os.path.abspath(__file__))}/model/usd/indy7_simplified/indy7_simplified.usd",
-        activate_contact_sensors=False,
+        activate_contact_sensors=False, # TODO
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
-            disable_gravity=True,  # Must! (Indy control framework already includes gravity compensation)
+            disable_gravity=True,  # (Indy control framework already includes gravity compensation)
             max_depenetration_velocity=5.0,
         ),
         articulation_props=sim_utils.ArticulationRootPropertiesCfg(
