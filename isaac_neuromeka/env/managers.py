@@ -1,12 +1,12 @@
-from omni.isaac.lab.managers import ActionManager
-from omni.isaac.lab.envs import ManagerBasedEnv
-from omni.isaac.lab.assets import Articulation
-from omni.isaac.lab.envs import ManagerBasedRLEnv, ManagerBasedRLEnvCfg
+from isaaclab.managers import ActionManager
+from isaaclab.envs import ManagerBasedEnv
+from isaaclab.assets import Articulation
+from isaaclab.envs import ManagerBasedRLEnv, ManagerBasedRLEnvCfg
 from prettytable import PrettyTable
 
 from collections.abc import Sequence
 
-from omni.isaac.lab.managers import (
+from isaaclab.managers import (
     EventManager,
     ObservationManager,
     CommandManager,
@@ -280,5 +280,6 @@ class HistoryManager(ManagerTermBase):
         # update history buffer
         self.history_buffer = torch.roll(self.history_buffer, shifts=-1, dims=1)
         self.history_buffer[:, -1] = current_data
+
         return torch.reshape(self.history_buffer[:, :-1], (env.num_envs, -1))
     

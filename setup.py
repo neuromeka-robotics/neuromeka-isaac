@@ -13,6 +13,10 @@ EXTENSION_PATH = os.path.dirname(os.path.realpath(__file__))
 # Read the extension.toml file
 EXTENSION_TOML_DATA = toml.load(os.path.join(EXTENSION_PATH, "config", "extension.toml"))
 
+# Load requirements from requirements.txt
+with open(os.path.join(EXTENSION_PATH, "requirements.txt")) as f:
+    requirements = f.read().splitlines()
+
 # Installation operation
 setup(
     name="isaac_neuromeka",
@@ -26,10 +30,11 @@ setup(
     include_package_data=True,
     python_requires=">=3.10",
     packages=["isaac_neuromeka"],
+    install_requires=requirements,
     classifiers=[
         "Natural Language :: English",
         "Programming Language :: Python :: 3.10",
-        "Isaac Sim :: 4.2.0",
+        "Isaac Sim :: 4.5.0",
     ],
     zip_safe=False,
 )

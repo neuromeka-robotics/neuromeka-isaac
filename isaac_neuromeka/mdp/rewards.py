@@ -1,24 +1,19 @@
-# Copyright (c) 2022-2024, The ORBIT Project Developers.
-# All rights reserved.
-#
-# SPDX-License-Identifier: BSD-3-Clause
-
 from __future__ import annotations
 
 import pdb
 from typing import TYPE_CHECKING
 
 import torch
-from omni.isaac.lab.assets import RigidObject
-from omni.isaac.lab.managers import SceneEntityCfg
-from omni.isaac.lab.utils.math import (
+from isaaclab.assets import RigidObject
+from isaaclab.managers import SceneEntityCfg
+from isaaclab.utils.math import (
     combine_frame_transforms,
     quat_error_magnitude,
     quat_mul,
 )
 
 if TYPE_CHECKING:
-    from omni.isaac.lab.envs import ManagerBasedRLEnv
+    from isaaclab.envs import ManagerBasedRLEnv
 from isaac_neuromeka.assets.articulation import FiniteArticulation
 
 def position_command_error(env: ManagerBasedRLEnv, command_name: str, asset_cfg: SceneEntityCfg) -> torch.Tensor:
@@ -58,7 +53,7 @@ def orientation_command_error(env: ManagerBasedRLEnv, command_name: str, asset_c
 def end_effector_position_tracking_bounded(env: ManagerBasedRLEnv,
                                            command_name: str,
                                            asset_cfg: SceneEntityCfg,
-                                           distance_max: float,
+                                           distance_max: float = 1.0,
                                            ) -> torch.Tensor:
 
     # extract the asset (to enable type hinting)
@@ -71,7 +66,8 @@ def end_effector_position_tracking_bounded(env: ManagerBasedRLEnv,
     
     distance = torch.norm(curr_pos_w - des_pos_w, dim=1)
     distance_bonus = 1.0 - torch.clamp(distance, 0.0, distance_max) / distance_max
-    
+
+
     return distance_bonus
 
 
@@ -79,7 +75,7 @@ def end_effector_position_tracking_bounded(env: ManagerBasedRLEnv,
 def end_effector_orientation_tracking_distance_bounded(env: ManagerBasedRLEnv,
                                                         command_name: str,
                                                         asset_cfg: SceneEntityCfg,
-                                                        distance_max: float = 0.2) -> torch.Tensor:
+                                                        distance_max: float = 0.5) -> torch.Tensor:
 
     # extract the asset (to enable type hinting)
     asset: RigidObject = env.scene[asset_cfg.name]

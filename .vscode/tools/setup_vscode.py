@@ -23,17 +23,16 @@ PROJECT_DIR = pathlib.Path(__file__).parents[2]
 """Path to the the project directory."""
 
 try:
-    import isaacsim  # noqa: F401
-
-    isaacsim_dir = os.environ.get("ISAAC_PATH", "")
-except ModuleNotFoundError or ImportError:
     # Create a parser to get the isaac-sim path
     parser = argparse.ArgumentParser(description="Setup the VSCode settings for the project.")
     parser.add_argument("--isaac_path", type=str, help="The absolute path to the Isaac Sim installation.")
+    parser.add_argument("--isaaclab_path", type=str, help="The absolute path to the IsaacLab installation.")
     args = parser.parse_args()
 
     # parse the isaac-sim directory
     isaacsim_dir = args.isaac_path
+    isaaclab_dir = args.isaaclab_path
+
     # check if the isaac-sim directory is provided
     if not os.path.exists(isaacsim_dir):
         raise FileNotFoundError(
@@ -58,6 +57,9 @@ if not os.path.exists(isaacsim_dir):
 
 ISAACSIM_DIR = isaacsim_dir
 """Path to the isaac-sim directory."""
+
+ISAACLAB_DIR = isaaclab_dir
+"""Path to the isaac-lab directory."""
 
 
 def overwrite_python_analysis_extra_paths(isaaclab_settings: str) -> str:
@@ -97,7 +99,7 @@ def overwrite_python_analysis_extra_paths(isaaclab_settings: str) -> str:
         path_names = [path_name.strip().strip('"') for path_name in path_names]
         path_names = [path_name for path_name in path_names if len(path_name) > 0]
 
-        # change the path names to be relative to the Isaac Lab directory
+        # change the path names to be relative to the current project directory
         rel_path = os.path.relpath(ISAACSIM_DIR, PROJECT_DIR)
         path_names = ['"${workspaceFolder}/' + rel_path + "/" + path_name + '"' for path_name in path_names]
     else:
@@ -111,13 +113,10 @@ def overwrite_python_analysis_extra_paths(isaaclab_settings: str) -> str:
         )
 
     # add the path names that are in the Isaac Lab extensions directory
-    # isaaclab_extensions = os.listdir(os.path.join(PROJECT_DIR, "exts"))
-    # path_names.extend(['"${workspaceFolder}/exts/' + ext + '"' for ext in isaaclab_extensions])
+    isaaclab_extensions = os.listdir(os.path.join(ISAACLAB_DIR, "source"))
 
-
-    # isaaclab_extensions = os.listdir(PROJECT_DIR)
-    isaaclab_extension = os.path.join(PROJECT_DIR, "isaac_neuromeka")
-    path_names.extend(['"${workspaceFolder}/' + isaaclab_extension + '"'])
+    # isaaclab_extensions = 
+    path_names.extend(['"/home/joonho/git/IsaacLab/source/' + ext + '"' for ext in isaaclab_extensions])
     
     # combine them into a single string
     path_names = ",\n\t\t".expandtabs(4).join(path_names)

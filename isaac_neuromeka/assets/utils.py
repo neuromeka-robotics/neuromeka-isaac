@@ -9,11 +9,11 @@ from dataclasses import MISSING
 import h5py
 import numpy as np
 import omni.isaac.core.utils.prims as prim_utils
-import omni.isaac.lab.sim as sim_utils
+import isaaclab.sim as sim_utils
 import omni.usd
-from omni.isaac.lab.sim.spawners.from_files.from_files import _spawn_from_usd_file
-from omni.isaac.lab.sim.spawners.from_files.from_files_cfg import FileCfg
-from omni.isaac.lab.utils import configclass
+from isaaclab.sim.spawners.from_files.from_files import _spawn_from_usd_file
+from isaaclab.sim.spawners.from_files.from_files_cfg import FileCfg
+from isaaclab.utils import configclass
 from pxr import Gf, Sdf, Semantics, Usd, UsdGeom, Vt
 
 
@@ -546,7 +546,7 @@ class MultiAssetCfg(sim_utils.SpawnerCfg):
 ################################
 from typing import Dict
 from collections.abc import Callable
-from omni.isaac.lab.sim import CuboidCfg, spawn_cuboid
+from isaaclab.sim import CuboidCfg, spawn_cuboid
 
 def spawn_random_cuboid(
         prim_path: str,

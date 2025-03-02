@@ -1,36 +1,31 @@
-# Copyright (c) 2022-2024, The ORBIT Project Developers.
-# All rights reserved.
-#
-# SPDX-License-Identifier: BSD-3-Clause
-
 from __future__ import annotations
 
 import pdb
 from dataclasses import MISSING
 
 import numpy as np
-import omni.isaac.lab.sim as sim_utils
-from omni.isaac.lab.assets import ArticulationCfg, AssetBaseCfg
-from omni.isaac.lab.envs import ManagerBasedRLEnvCfg
-from omni.isaac.lab.managers import ActionTermCfg as ActionTerm
-from omni.isaac.lab.managers import CurriculumTermCfg as CurrTerm
-from omni.isaac.lab.managers import EventTermCfg as EventTerm
-from omni.isaac.lab.managers import ObservationGroupCfg as ObsGroup
-from omni.isaac.lab.managers import ObservationTermCfg as ObsTerm
-from omni.isaac.lab.managers import ManagerTermBase
-from omni.isaac.lab.managers import RewardTermCfg as RewTerm
-from omni.isaac.lab.managers import SceneEntityCfg
-from omni.isaac.lab.managers import TerminationTermCfg as DoneTerm
-from omni.isaac.lab.scene import InteractiveSceneCfg
-from omni.isaac.lab.utils import configclass
-from omni.isaac.lab.utils.assets import ISAAC_NUCLEUS_DIR
-from omni.isaac.lab.utils.noise import AdditiveUniformNoiseCfg as Unoise
-from omni.isaac.lab.utils.noise import AdditiveGaussianNoiseCfg as Gnoise
+import isaaclab.sim as sim_utils
+from isaaclab.assets import ArticulationCfg, AssetBaseCfg
+from isaaclab.envs import ManagerBasedRLEnvCfg
+from isaaclab.managers import ActionTermCfg as ActionTerm
+from isaaclab.managers import CurriculumTermCfg as CurrTerm
+from isaaclab.managers import EventTermCfg as EventTerm
+from isaaclab.managers import ObservationGroupCfg as ObsGroup
+from isaaclab.managers import ObservationTermCfg as ObsTerm
+from isaaclab.managers import ManagerTermBase
+from isaaclab.managers import RewardTermCfg as RewTerm
+from isaaclab.managers import SceneEntityCfg
+from isaaclab.managers import TerminationTermCfg as DoneTerm
+from isaaclab.scene import InteractiveSceneCfg
+from isaaclab.utils import configclass
+from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
+from isaaclab.utils.noise import AdditiveUniformNoiseCfg as Unoise
+from isaaclab.utils.noise import AdditiveGaussianNoiseCfg as Gnoise
 
 from isaac_neuromeka.env.rl_task_custom_env import HistoryManager
 from isaac_neuromeka.utils.etc import EmptyCfg
 import isaac_neuromeka.mdp as mdp
-
+import math
 
 ##
 # MDP settings
@@ -54,7 +49,7 @@ class CommandsCfg:
             pos_y=(ConFig.default_ee_pose[1] - 0.2, ConFig.default_ee_pose[1] + 0.2),
             pos_z=(ConFig.default_ee_pose[2] - 0.3, ConFig.default_ee_pose[2]),
             roll=(0.0, 0.0),
-            pitch=MISSING,  # depends on end-effector axis
+            pitch=(math.pi, math.pi),  # depends on end-effector axis
             yaw=(-3.14, 3.14),
         ),
     )
@@ -90,22 +85,8 @@ class ObservationsCfg:
             self.concatenate_terms = True
             
 
-    @configclass
-    class DemoPolicyCfg(ObsGroup):
-        q = ObsTerm(func=mdp.joint_pos)
-        qdot = ObsTerm(func=mdp.finite_joint_vel)
-        p = ObsTerm(func=mdp.body_pose_b, params={"body_name": "tcp"})
-        pdot = ObsTerm(func=mdp.body_vel_b, params={"body_name": "tcp"})
-        op_state = ObsTerm(func=mdp.op_state)
-        position_error = ObsTerm(func=mdp.position_error)
-        orientation_error = ObsTerm(func=mdp.orientation_error)
-
-        def __post_init__(self):
-            self.enable_corruption = False
-            self.concatenate_terms = False
-
     # observation groups
-    policy: PolicyCfg | DemoPolicyCfg = PolicyCfg()
+    policy: PolicyCfg  = PolicyCfg()
 
 @configclass
 class TeacherObsCfg(ObservationsCfg):
@@ -160,16 +141,16 @@ class EventCfg:
     reset_all = EventTerm(func=mdp.reset_scene_to_default, mode="reset")
 
     # TODO: fix them
-    # randomize_joint_friction = EventTerm(
-    #     func=mdp.randomize_joint_parameters,
-    #     mode="reset",
-    #     params={
-    #         "asset_cfg": SceneEntityCfg("robot"),
-    #         "friction_range": (0.7, 1.3),
-    #         "operation": "abs",
-    #         "distribution": "uniform"
-    #     }
-    # )
+    randomize_joint_friction = EventTerm(
+        func=mdp.randomize_joint_parameters,
+        mode="reset",
+        params={
+            "asset_cfg": SceneEntityCfg("robot"),
+            "friction_distribution_params": (0.7, 1.3),
+            "operation": "abs",
+            "distribution": "uniform"
+        }
+    )
 
     # randomize_joint_stiffness_and_damping = EventTerm(
     #     func=mdp.randomize_actuator_gains,
@@ -202,6 +183,7 @@ class RewardsCfg:
         weight= 0.1,
         params={"asset_cfg": SceneEntityCfg("robot", body_names=MISSING), "command_name": "ee_pose", "distance_max": 0.5},
     )
+
     end_effector_orientation_tracking = RewTerm(
         func=mdp.end_effector_orientation_tracking_distance_bounded,
         weight= 0.05,
@@ -252,21 +234,13 @@ class TerminationsCfg:
     time_out = DoneTerm(func=mdp.time_out, time_out=True)
 
 
-@configclass
-class CurriculumCfg:
-    """Curriculum terms for the MDP."""
-
-    # action_rate = CurrTerm(
-    #     func=mdp.modify_reward_weight, params={"term_name": "action_rate", "weight": -0.005, "num_steps": 4500}
-    # )
-
 
 ##
 # Environment configuration
 ##
 
-from omni.isaac.lab.envs import ManagerBasedEnvCfg
-from omni.isaac.lab.envs.ui import ManagerBasedRLEnvWindow
+from isaaclab.envs import ManagerBasedEnvCfg
+from isaaclab.envs.ui import ManagerBasedRLEnvWindow
 
 @configclass
 class NrmkRLEnvCfg(ManagerBasedEnvCfg):

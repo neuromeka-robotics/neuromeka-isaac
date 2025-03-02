@@ -1,9 +1,9 @@
 import math
 import os
 
-import omni.isaac.lab.sim as sim_utils
-from omni.isaac.lab.actuators import ImplicitActuatorCfg
-from omni.isaac.lab.assets.articulation import ArticulationCfg
+import isaaclab.sim as sim_utils
+from isaaclab.actuators import ImplicitActuatorCfg
+from isaaclab.assets.articulation import ArticulationCfg
 from isaac_neuromeka.assets.articulation import FiniteArticulation
 
 ##
@@ -15,7 +15,7 @@ DUAL_ARM_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
         usd_path=f"{os.path.dirname(os.path.abspath(__file__))}/model/usd/dual_icon3/dual_icon3_edited.usd",
         # usd_path=f"{os.path.dirname(os.path.abspath(__file__))}/model/usd/indy7_simplified/indy7_simplified.usd",
-        activate_contact_sensors=False, # TODO
+        activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
             max_depenetration_velocity=5.0,

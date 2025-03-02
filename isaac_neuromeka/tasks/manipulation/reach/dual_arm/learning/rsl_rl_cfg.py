@@ -1,5 +1,5 @@
-from omni.isaac.lab.utils import configclass
-from omni.isaac.lab_tasks.utils.wrappers.rsl_rl import (
+from isaaclab.utils import configclass
+from isaaclab_rl.rsl_rl import (
     RslRlOnPolicyRunnerCfg,
     RslRlPpoActorCriticCfg,
     RslRlPpoAlgorithmCfg,
@@ -11,7 +11,7 @@ class ReachPPORunnerCfg(RslRlOnPolicyRunnerCfg):
     num_steps_per_env = 24
     max_iterations = 50000
     save_interval = 50
-    experiment_name = "indy_reach"
+    experiment_name = "dual_arm_reach"
     run_name = ""
     resume = False
     empirical_normalization = False

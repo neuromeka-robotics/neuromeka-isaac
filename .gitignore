@@ -20,9 +20,4 @@ object_dataset/
 docker/artifacts/
 *.tmp
 
-
-# No USD files allowed in the repo
-**/*.usd
-**/*.usda
-**/*.usdc
-**/*.usdz
+build/

@@ -1,8 +1,8 @@
 from collections.abc import Sequence
 
 import torch
-from omni.isaac.lab.assets.articulation import Articulation
-from omni.isaac.lab.utils.math import matrix_from_quat
+from isaaclab.assets.articulation import Articulation
+from isaaclab.utils.math import matrix_from_quat
 
 
 class FiniteArticulation(Articulation):

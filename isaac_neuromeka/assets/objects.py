@@ -2,8 +2,8 @@ import pickle
 from collections.abc import Sequence
 
 import torch
-from omni.isaac.lab.assets.rigid_object import RigidObject
-from omni.isaac.lab.utils.math import matrix_from_quat
+from isaaclab.assets.rigid_object import RigidObject
+from isaaclab.utils.math import matrix_from_quat
 
 
 class RigidObject_w_FullPCL(RigidObject):

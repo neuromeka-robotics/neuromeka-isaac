@@ -3,10 +3,10 @@ from __future__ import annotations
 import math
 import numpy as np
 
-from omni.isaac.lab.utils import configclass
-# from omni.isaac.lab.assets import RigidObjectCfg
-# import omni.isaac.lab.sim as sim_utils
-# from omni.isaac.lab.sensors import CameraCfg, ContactSensorCfg
+from isaaclab.utils import configclass
+# from isaaclab.assets import RigidObjectCfg
+# # import isaaclab.sim as sim_utils
+# from isaaclab.sensors import CameraCfg, ContactSensorCfg
 import isaac_neuromeka.mdp as mdp
 
 ##
@@ -45,9 +45,6 @@ class Indy7ReachEnvCfg(ReachEnvCfg):
         # override command generator body
         # end-effector is along z-direction
         self.commands.ee_pose.body_name = "tcp"
-        self.commands.ee_pose.ranges.pitch = (math.pi, math.pi)
-        # self.observations.policy.enable_corruption = False
-
 
 
 @configclass

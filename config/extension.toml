@@ -12,9 +12,9 @@ category = "robotics"
 readme  = "README.md"
 
 [dependencies]
-"omni.isaac.lab" = {}
-"omni.isaac.lab_assets" = {}
-"omni.isaac.lab_tasks" = {}
+"isaaclab" = {}
+"isaaclab_assets" = {}
+"isaaclab_tasks" = {}
 
 
 [[python.module]]

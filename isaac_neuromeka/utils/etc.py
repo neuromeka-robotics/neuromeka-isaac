@@ -1,5 +1,5 @@
-from omni.isaac.lab_tasks.utils.wrappers.rsl_rl import RslRlPpoActorCriticCfg
-from omni.isaac.lab.utils import configclass
+from isaaclab_rl.rsl_rl import RslRlPpoActorCriticCfg
+from isaaclab.utils import configclass
 
 
 @configclass

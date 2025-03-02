@@ -1,7 +1,7 @@
 import os
 from dataclasses import MISSING
 from typing import Literal
-from omni.isaac.lab.utils import configclass
+from isaaclab.utils import configclass
 
 from isaac_neuromeka.learning.algorithm_cfg import NrmkPPOCfg, NrmkDistillationCfg, NrmkP3OCfg
 

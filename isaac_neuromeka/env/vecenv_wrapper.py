@@ -1,7 +1,5 @@
-# Copyright (c) 2022-2024, The ORBIT Project Developers.
-# All rights reserved.
-#
-# SPDX-License-Identifier: BSD-3-Clause
+# Modified from Orbit's implementation
+
 
 """Wrapper to configure an :class:`ManagerBasedRLEnv` instance to NRMK-RL vectorized environment.
 
@@ -9,7 +7,7 @@ The following example shows how to wrap an environment for NRMK-RL:
 
 .. code-block:: python
 
-    from omni.isaac.lab_tasks.utils.wrappers.nrmk_rl import NrmkRlVecEnvWrapper
+    from isaaclab_tasks.utils.wrappers.nrmk_rl import NrmkRlVecEnvWrapper
 
     env = NrmkRlVecEnvWrapper(env)
 
@@ -19,7 +17,7 @@ import pdb
 import gymnasium as gym
 import torch
 from nrmk_rl.env import VecEnv
-from omni.isaac.lab.envs import ManagerBasedRLEnv
+from isaaclab.envs import ManagerBasedRLEnv
 
 
 class NrmkRlVecEnvWrapper(VecEnv):

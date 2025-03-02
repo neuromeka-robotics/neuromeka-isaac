@@ -1,30 +1,25 @@
-# Copyright (c) 2022-2024, The ORBIT Project Developers.
-# All rights reserved.
-#
-# SPDX-License-Identifier: BSD-3-Clause
-
 from __future__ import annotations
 
 import pdb
 from dataclasses import MISSING
 
 import numpy as np
-import omni.isaac.lab.sim as sim_utils
-from omni.isaac.lab.assets import ArticulationCfg, AssetBaseCfg
-from omni.isaac.lab.managers import ActionTermCfg as ActionTerm
-from omni.isaac.lab.managers import CurriculumTermCfg as CurrTerm
-from omni.isaac.lab.managers import EventTermCfg as EventTerm
-from omni.isaac.lab.managers import ObservationGroupCfg as ObsGroup
-from omni.isaac.lab.managers import ObservationTermCfg as ObsTerm
-from omni.isaac.lab.managers import ManagerTermBase
-from omni.isaac.lab.managers import RewardTermCfg as RewTerm
-from omni.isaac.lab.managers import SceneEntityCfg
-from omni.isaac.lab.managers import TerminationTermCfg as DoneTerm
-from omni.isaac.lab.scene import InteractiveSceneCfg
-from omni.isaac.lab.utils import configclass
+import isaaclab.sim as sim_utils
+from isaaclab.assets import ArticulationCfg, AssetBaseCfg
+from isaaclab.managers import ActionTermCfg as ActionTerm
+from isaaclab.managers import CurriculumTermCfg as CurrTerm
+from isaaclab.managers import EventTermCfg as EventTerm
+from isaaclab.managers import ObservationGroupCfg as ObsGroup
+from isaaclab.managers import ObservationTermCfg as ObsTerm
+from isaaclab.managers import ManagerTermBase
+from isaaclab.managers import RewardTermCfg as RewTerm
+from isaaclab.managers import SceneEntityCfg
+from isaaclab.managers import TerminationTermCfg as DoneTerm
+from isaaclab.scene import InteractiveSceneCfg
+from isaaclab.utils import configclass
 from isaac_neuromeka.utils.etc import EmptyCfg
 import isaac_neuromeka.mdp as mdp
-from omni.isaac.lab.sensors import ContactSensor, ContactSensorCfg, FrameTransformer, FrameTransformerCfg
+from isaaclab.sensors import ContactSensor, ContactSensorCfg, FrameTransformer, FrameTransformerCfg
 
 # Import common environment configuration
 from isaac_neuromeka.tasks.manipulation.common.env_cfg_common import *
@@ -61,7 +56,7 @@ class ReachSceneCfg(InteractiveSceneCfg):
 
     # contact sensor
     contact_sensors = ContactSensorCfg(
-            prim_path="{ENV_REGEX_NS}/Robot/link[5-6]",
+            prim_path="{ENV_REGEX_NS}/Robot/link[2-6]",
             update_period=0.0, debug_vis=False, track_pose=True, track_air_time=False,
         )
     
@@ -70,14 +65,6 @@ class ReachSceneCfg(InteractiveSceneCfg):
         prim_path="/World/light",
         spawn=sim_utils.DomeLightCfg(color=(0.75, 0.75, 0.75), intensity=2500.0),
     )
-
-    # sky_light = AssetBaseCfg(
-    #     prim_path="/World/skyLight",
-    #     spawn=sim_utils.DomeLightCfg(
-    #         intensity=750.0,
-    #         texture_file=f"{ISAAC_NUCLEUS_DIR}/Materials/Textures/Skies/PolyHaven/kloofendal_43d_clear_puresky_4k.hdr",
-    #     ),
-    # )
 
 ##
 # Environment configuration
@@ -97,9 +84,9 @@ class ReachEnvCfg(NrmkRLEnvCfg):
     rewards: RewardsCfg | EmptyCfg = RewardsCfg()
     terminations: TerminationsCfg = TerminationsCfg()
     events: EventCfg | EmptyCfg = EventCfg()
-    curriculum: CurriculumCfg | EmptyCfg = CurriculumCfg()
+    curriculum = EmptyCfg() # Not used for now
     # CMDP settings
-    costs: CostsCfg | EmptyCfg = EmptyCfg()
+    costs: CostsCfg | EmptyCfg = EmptyCfg() # Not used for now
     
     # 
     actor_obs_list: list = ["policy"] # ["proprioception", "point_cloud", "privileged"]
@@ -111,6 +98,6 @@ class ReachEnvCfg(NrmkRLEnvCfg):
         """Post initialization."""
         # task settings
         self.decimation = 24  # 5hz # 30 Hz (4)
-        self.episode_length_s = 12.0
+        self.episode_length_s = 8.0
         # viewer settings
         self.viewer.eye = (2.5, 2.5, 2.5)

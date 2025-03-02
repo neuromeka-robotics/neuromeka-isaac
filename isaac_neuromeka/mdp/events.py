@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from omni.isaac.lab.envs import ManagerBasedRLEnv
+from isaaclab.envs import ManagerBasedRLEnv
 from typing import Dict
 
 def randomize_delay(

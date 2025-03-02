@@ -1,21 +1,16 @@
-# Copyright (c) 2022-2024, The ORBIT Project Developers.
-# All rights reserved.
-#
-# SPDX-License-Identifier: BSD-3-Clause
-
 from __future__ import annotations
 
 import pdb
 from typing import TYPE_CHECKING
 
 import torch
-from omni.isaac.lab.assets import Articulation, RigidObject
-from omni.isaac.lab.managers import SceneEntityCfg
-from omni.isaac.lab.sensors import FrameTransformer
-from omni.isaac.lab.utils.math import combine_frame_transforms
+from isaaclab.assets import Articulation, RigidObject
+from isaaclab.managers import SceneEntityCfg
+from isaaclab.sensors import FrameTransformer
+from isaaclab.utils.math import combine_frame_transforms
 
 if TYPE_CHECKING:
-    from omni.isaac.lab.envs import ManagerBasedRLEnv
+    from isaaclab.envs import ManagerBasedRLEnv
 
 from isaac_neuromeka.assets.articulation import FiniteArticulation
 
