@@ -73,3 +73,60 @@ class Indy7ReachCMDPEnvCfg(Indy7ReachEnvCfg):
         super().__post_init__()
         # self.rewards.joint_vel.weight *= 0.1
 
+
+
+from isaaclab.terrains import FlatPatchSamplingCfg, TerrainImporter, TerrainImporterCfg
+from isaaclab.terrains  import TerrainGeneratorCfg
+from isaac_neuromeka.terrains.mesh_terrain_cfg import MeshBoxTerrainCfg
+from isaac_neuromeka.terrains.terrain_importer_no_overlap import TerrainImporterNoOverlap
+import isaaclab.sim as sim_utils
+
+@configclass
+class IndyReachObstacleEnvCfg(Indy7ReachEnvCfg):
+    
+    
+    def __post_init__(self):
+        super().__post_init__()
+        
+        terain_cfg = TerrainGeneratorCfg(
+            curriculum=False,
+            size=(2.0, 2.0),
+            border_width=0.0,
+            num_rows=65,num_cols=65, # for 4000 envs
+            difficulty_range=(0.25, 1.0),
+            sub_terrains={
+                "boxes": MeshBoxTerrainCfg(
+                    high_prob=0.1,
+                    proportion=0.5,
+                    grid_width=0.3,
+                    grid_height_range=(-0.05, 0.3),
+                    low_height_ratio = 0.3,                   
+                    platform_width=0.5,
+                    robot_range_width = 0.25
+                )                
+            },
+        )
+                
+        # remove ground attribute
+        delattr(self.scene, "ground")
+    
+        # replace terrain
+        self.scene.terrain = TerrainImporterCfg(
+            class_type=TerrainImporterNoOverlap,
+            prim_path="/World/ground",
+            terrain_type="generator",
+            terrain_generator=terain_cfg,
+            max_init_terrain_level=9,
+            collision_group=-1,
+            physics_material=sim_utils.RigidBodyMaterialCfg(
+                friction_combine_mode="multiply",
+                restitution_combine_mode="multiply",
+                static_friction=1.0,
+                dynamic_friction=1.0,
+            ),
+            visual_material=sim_utils.MdlFileCfg(
+                mdl_path="{NVIDIA_NUCLEUS_DIR}/Materials/Base/Plastics/Rubber_Smooth.mdl",
+                project_uvw=True,
+            ),
+            debug_vis=False,
+        )

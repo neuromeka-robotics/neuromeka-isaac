@@ -17,6 +17,17 @@ gym.register(
     },
 )
 
+gym.register(
+    id="Indy-Reach-Obstacle",
+    entry_point="isaac_neuromeka.env.rl_task_custom_env:CustomManagerBasedRLEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": env_cfg.IndyReachObstacleEnvCfg,
+        "rsl_rl_cfg_entry_point": f"{learning.__name__}.rsl_rl_cfg:ReachPPORunnerCfg",
+        "nrmk_rl_cfg_entry_point": f"{learning.__name__}.nrmk_rl_cfg:ReachPPORunnerCfg",
+    },
+)
+
 
 ## To be released in the future.
 
